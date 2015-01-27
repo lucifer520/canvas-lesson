@@ -1,3 +1,3 @@
 #canvas-lesson
 
-canvas ��ϵͳѧϰ
+canvas 的系统学习
