@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+	<canvas id="canvas" style="display:block;margin: auto;"></canvas>
+	</body>
+	
+	
+	<script>
+	var WINDOW_WIDTH=1024;    //画布宽度
+	var WINDOW_HEIGHT=568;     //画布高度
+		window.onload=function(){
+			var canvas=document.getElementById("canvas");
+			canvas.width=WINDOW_WIDTH;
+			canvas.height=WINDOW_HEIGHT;
+			var context=canvas.getContext('2d');
+			drawStar(context,400,300,150,300,0)
+			
+		
+	
+		
+		}
+     function drawStar(cxt,x,y,r,R,ret){   //绘制五角星,偏移量x，y。大小圆半径r,R.旋转角度，正的表示顺时针，负的表示逆时针
+     	cxt.beginPath();		
+		for(var i=0;i<5;i++){
+			cxt.lineTo(Math.cos((18+72*i)/180*Math.PI+ret)*R+x,
+			                             -Math.sin((18+72*i)/180*Math.PI+ret)*R+y);   //绘制大圆上的点
+			cxt.lineTo(Math.cos((54+72*i)/180*Math.PI+ret)*r+x,
+			                             -Math.sin((54+72*i)/180*Math.PI+ret)*r+y);     //绘制小圆上的点
+	   }
+		cxt.closePath();
+		cxt.stroke();
+     }
+	</script>
+</html>

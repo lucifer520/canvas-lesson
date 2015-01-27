@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+	<canvas id="canvas" style="display:block;margin: auto;"></canvas>
+	</body>
+	
+	
+	<script>
+	var WINDOW_WIDTH=1024;    //画布宽度
+	var WINDOW_HEIGHT=568;     //画布高度
+	var colors=["#33B5E5","#14F0E1","#E12D9B","#caff67","#67becf","#ef3d61","#f9f51a","#a594c0","#fa8ecc","f6ca29"]; //颜色
+		window.onload=function(){
+			var canvas=document.getElementById("canvas");
+			canvas.width=WINDOW_WIDTH;
+			canvas.height=WINDOW_HEIGHT;
+			var context=canvas.getContext('2d');
+			
+			context.fillStyle="black";
+			context.fillRect(0,0,canvas.width,canvas.height);
+		    for(var i=0;i<200;i++){
+		    	var R=Math.random()*10+10;   //10---20
+		    	var x=Math.random()*canvas.width;
+		    	var y=Math.random()*canvas.height;
+		    	var rot=Math.random()*360;
+		    	if(x<=R){
+		    		x=R;
+		    	}
+		    	if(x>=canvas.width-R)
+		    	    x=canvas.width-R;
+		    	if(y<=R){
+		    		y=R;
+		    	}
+		    	if(y>=canvas.height-R)
+		    	    y=canvas.height-R;	
+				 drawStar(context,x,y,R,rot);
+		    }
+		  
+		}
+     function drawStar(cxt,x,y,R,rot){ 
+
+             //绘制五角星,偏移量（x，y）。大小圆半径r,R.旋转角度，正的表示顺时针，负的表示逆时针
+        cxt.save();                   //保存当前的状态
+     	cxt.translate(x,y);
+        star(cxt);            
+        cxt.lineJoin="round";
+		cxt.fillStyle=colors[Math.floor(Math.random()*colors.length)];
+		cxt.fill();	
+		cxt.restore();  //返回save（）保存的之前的所有状态
+     }
+     
+     
+     
+     
+     
+     function star(cxt){     //只负责绘制一个标准的圆心摆放在0,0位置的五角星内圆半径0.5  外圆半径1
+        cxt.beginPath();		
+		for(var i=0;i<5;i++){
+			cxt.lineTo(Math.cos((18+72*i)/180*Math.PI)*1,
+			                             -Math.sin((18+72*i)/180*Math.PI)*1);   //绘制大圆上的点
+			cxt.lineTo(Math.cos((54+72*i)/180*Math.PI)*0.5,
+			                             -Math.sin((54+72*i)/180*Math.PI)*0.5);     //绘制小圆上的点
+	   }
+		cxt.closePath();
+	
+     }
+     
+     
+	</script>
+</html>
