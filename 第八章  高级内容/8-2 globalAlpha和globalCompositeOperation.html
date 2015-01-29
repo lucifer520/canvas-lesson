@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+	<canvas id="canvas" style="display:block;margin: auto;"></canvas>
+	</body>
+	
+	
+	<script>
+	var WINDOW_WIDTH=1024;    //画布宽度
+	var WINDOW_HEIGHT=668;     //画布高度
+	var balls=[];
+		window.onload=function(){
+			var canvas=document.getElementById("canvas");
+			canvas.width=WINDOW_WIDTH;
+			canvas.height=WINDOW_HEIGHT;
+			var context=canvas.getContext('2d');
+			context.globalAlpha=0.7;        //设置全局的透明度
+			context.globalCompositeOperation="lighter"
+			ball();
+			setInterval(function(){
+				reder(context);	
+				update();
+			},50);  //50毫秒执行一次function（）匿名函数的操作
+			
+		}
+		
+		
+	function update(){
+		for(var i=0;i<balls.length;i++){
+				var ball=balls[i];
+				ball.x+=ball.vx;
+				ball.y+=ball.vy;
+				ball.vy+=ball.g;
+				if(ball.y>=WINDOW_HEIGHT-ball.r){
+					ball.y=WINDOW_HEIGHT-ball.r;
+					ball.vy=-ball.vy;	
+				}
+					if(ball.x>=WINDOW_WIDTH-ball.r){
+					ball.x=WINDOW_WIDTH-ball.r;
+					ball.vx=-ball.vx;	
+				}
+						if(ball.y<=ball.r){
+					ball.y=ball.r;
+					ball.vy=-ball.vy;	
+				}
+							if(ball.x<=ball.r){
+					ball.x=ball.r;
+					ball.vx=-ball.vx;	
+			 }
+							
+		    }
+	}
+		
+	function reder(cxt){
+		cxt.clearRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);   //对画布里的部分（目前是全部）刷新一遍
+			for(var i=0;i<balls.length;i++){
+				var ball=balls[i];
+				cxt.beginPath();
+				cxt.arc(ball.x,ball.y,ball.r,0,2*Math.PI);
+				cxt.closePath();
+				cxt.fillStyle=ball.color;
+				cxt.fill();
+			}	
+	}
+	
+	
+	
+	function ball(){
+		for(var i=0;i<100;i++){
+				addball();	
+		   }	
+	}
+		
+	function addball(){
+		        var r=Math.floor(Math.random()*255);
+				var g=Math.floor(Math.random()*255);
+				var b=Math.floor(Math.random()*255);
+				var RADIUS=Math.random()*50;
+		        var ball={
+            				x:Math.random()*WINDOW_WIDTH,
+            				y:Math.random()*WINDOW_HEIGHT,
+            				g:/*1.5+Math.random()*/0,
+            				vx:Math.pow(-1,Math.ceil(Math.random()*1000))*4,
+            				vy:Math.random()*10,
+            				color:"RGB("+r+","+g+","+b+")",
+            				r:RADIUS
+            			}
+            	balls.push(ball);  //增加的小球放入balls数组中
+	}
+		
+		
+		
+		
+	
+	</script>
+</html>
